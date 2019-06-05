@@ -73,7 +73,7 @@ describe 'A game of rock paper scissors' do
 
 
     context 'scissors vs paper' do
-      skip('returns "Scissors vs paper!"')
+      skip('returns "Scissors beats paper!"')
       skip('is finished')
     end
 
