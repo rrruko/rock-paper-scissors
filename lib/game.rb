@@ -12,29 +12,42 @@ class Game
     self.started || false
   end
 
+  def matchups
+    {
+      :rock => :scissors,
+      :paper => :rock,
+      :scissors => :paper
+    }
+  end
+
+  def beats(left, right)
+    matchups[left] == right
+  end
+
+  def win_message(winner, loser)
+    "#{winner.capitalize} beats #{loser}!"
+  end
+
+  def tie_message
+    "Tie game. Try again!"
+  end
+
+  def tie(left, right)
+    left == right
+  end
+
   def play(left = nil, right = nil)
     raise 'Game must first be started' unless started?
     return nil unless (left && right)
-    if (left == :rock && right == :scissors)
+
+    if beats(left, right)
       @finished = true
-      "Rock beats scissors!"
-    elsif (left == :scissors && right == :rock)
+      win_message(left, right)
+    elsif beats(right, left)
       @finished = true
-      "Rock beats scissors!"
-    elsif (left == :paper && right == :rock)
-      @finished = true
-      "Paper beats rock!"
-    elsif (left == :rock && right == :paper)
-      @finished = true
-      "Paper beats rock!"
-    elsif (left == :scissors && right == :paper)
-      @finished = true
-      "Scissors beats paper!"
-    elsif (left == :paper && right == :scissors)
-      @finished = true
-      "Scissors beats paper!"
-    elsif (left == right)
-      "Tie game. Try again!"
+      win_message(right, left)
+    elsif tie(left, right)
+      tie_message
     else
       :UNKNOWN
     end
